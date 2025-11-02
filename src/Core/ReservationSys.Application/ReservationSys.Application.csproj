@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ReservationSys.Domain\ReservationSys.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
