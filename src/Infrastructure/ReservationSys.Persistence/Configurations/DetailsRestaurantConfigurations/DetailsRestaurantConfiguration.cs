@@ -24,7 +24,7 @@ public class DetailsRestaurantConfiguration:IEntityTypeConfiguration<DetailsRest
 
         builder.Property(Dr => Dr.Description)
             .IsRequired()
-            .HasColumnType("nvarchar(max)");
+            .HasColumnType("text");
 
         
         builder.HasOne(Dr => Dr.Restaurant)
