@@ -255,3 +255,4 @@ AkavacheSqliteLinkerOverride.cs
 NuGetBuild
 WiX.Toolset.DummyFile.txt
 GitHubVS.sln.DotSettings
+/src/Presentation/ReservationSys.WebApi/appsettings.Development.json
