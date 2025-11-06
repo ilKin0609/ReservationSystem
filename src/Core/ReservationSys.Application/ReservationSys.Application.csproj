@@ -14,11 +14,21 @@
     <PackageReference Include="MediatR" Version="11.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.21">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ReservationSys.Domain\ReservationSys.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstracts\Repositories\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Features\User\Queries\" />
   </ItemGroup>
 
 </Project>
