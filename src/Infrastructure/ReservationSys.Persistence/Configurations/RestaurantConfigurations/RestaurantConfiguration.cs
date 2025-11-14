@@ -10,6 +10,13 @@ public class RestaurantConfiguration:IEntityTypeConfiguration<Restaurant>
     {
         builder.HasKey(Rt => Rt.Id);
 
+
+        builder.Property(r => r.Slug)
+            .HasMaxLength(200);
+
+        builder.HasIndex(r => r.Slug)
+            .IsUnique();
+
         builder.Property(Rt => Rt.Name)
             .IsRequired()
             .HasMaxLength(2000);
@@ -19,7 +26,11 @@ public class RestaurantConfiguration:IEntityTypeConfiguration<Restaurant>
 
         builder.Property(Rt => Rt.Longitude)
                .HasColumnType("decimal(9,6)");
-
+       
+        builder.HasOne(r => r.Category)
+               .WithMany(c => c.Restaurants)
+               .HasForeignKey(r => r.CategoryId);
+        
         builder.HasOne(Rt=>Rt.User)
             .WithMany(U=>U.Restaurants)
             .HasForeignKey(Rt=>Rt.UserId)

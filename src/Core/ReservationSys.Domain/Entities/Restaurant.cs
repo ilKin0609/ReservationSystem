@@ -6,10 +6,15 @@ public class Restaurant:BaseEntity
 
     public decimal Latitude { get; set; }
 
+    public string? Slug { get; set; }
+
     public decimal Longitude { get; set; }
 
     public string UserId { get; set; } = null!;
     public AppUser User { get; set; } = null!;
+
+    public Guid CategoryId { get; set; }
+    public Category Category { get; set; } = null!;
 
     public DetailsRestaurant DetailsRestaurant { get; set; } = null!;
 
