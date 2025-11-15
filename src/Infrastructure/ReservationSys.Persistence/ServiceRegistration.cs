@@ -15,6 +15,7 @@ public static class ServiceRegistration
 
         #region Services
         services.AddScoped<IJwtService, JwtService>();
+        services.AddHttpClient<IOtpService, Msg91OtpService>();
         #endregion
     }
 }

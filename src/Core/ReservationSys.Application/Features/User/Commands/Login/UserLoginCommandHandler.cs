@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using ReservationSys.Application.Abstracts.Services;
 using ReservationSys.Application.Shared.Responses;
 using ReservationSys.Domain.Entities;
 using System.Net;
-using System.Text;
 
 namespace ReservationSys.Application.Features.User.Commands.Login;
 

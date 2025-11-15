@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using ReservationSys.Application.Abstracts.Services;
 using ReservationSys.Application.Shared.Responses;
 using ReservationSys.Domain.Entities;
 using System.Net;
@@ -9,37 +10,20 @@ namespace ReservationSys.Application.Features.User.Commands.Register;
 
 public class UserRegisterCommandHandler : IRequestHandler<UserRegisterCommandRequest, BaseResponse<string>>
 {
-    public UserManager<AppUser> _userManager;
-    public UserRegisterCommandHandler(UserManager<AppUser> userManager)
+    private readonly UserManager<AppUser> _userManager;
+    private readonly IOtpService _otpService;
+    public UserRegisterCommandHandler(UserManager<AppUser> userManager, IOtpService otpService)
     {
         _userManager = userManager;
+        _otpService = otpService;
     }
     public async Task<BaseResponse<string>> Handle(UserRegisterCommandRequest request, CancellationToken cancellationToken)
     {
-        var existingUserEmail=await _userManager.FindByEmailAsync(request.Email);
-        if (existingUserEmail is not null)
-        {
-            return new("Email is already registered.",HttpStatusCode.BadRequest);
-        }
+        var existingUser = await _userManager.FindByNameAsync(request.PhoneNumber);
+        if (existingUser != null)
+            return new("This phone number is already registered.", HttpStatusCode.BadRequest);
 
-        var newUser = new AppUser
-        {
-            FullName = request.FullName,
-            Email = request.Email,
-            UserName = request.Email
-        };
-
-        var identityResult = await _userManager.CreateAsync(newUser, request.Password);
-        if(!identityResult.Succeeded)
-        {
-            StringBuilder errorMessage = new();
-            foreach (var error in identityResult.Errors)
-            {
-                errorMessage.AppendLine(error.Description);
-            }
-            return new(errorMessage.ToString(), HttpStatusCode.BadRequest);
-        }
-
-        return new("User registered successfully.",true, HttpStatusCode.Created);
+        await _otpService.SendOtpAsync(request);
+        return new("OTP code sent successfully.", true, HttpStatusCode.OK);
     }
 }

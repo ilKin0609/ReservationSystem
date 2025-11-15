@@ -17,6 +17,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     }
 
     public DbSet<Restaurant> Restaurants { get; set; }=null!;
+    public DbSet<Category> Categories { get; set; }=null!;
    
     public DbSet<Reservation> Reservations { get; set; }=null!;
     
