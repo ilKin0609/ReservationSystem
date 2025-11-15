@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ReservationSys.Application.Features.User.Commands.ConfirmOtp;
-using ReservationSys.Application.Features.User.Commands.Login;
+using ReservationSys.Application.Features.User.Commands.Login.LoginPassword;
+using ReservationSys.Application.Features.User.Commands.Login.LoginSendOTP;
 using ReservationSys.Application.Features.User.Commands.Register;
 
 namespace ReservationSys.WebApi.Controllers;
@@ -31,9 +32,23 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> UserLogin([FromBody] UserLoginCommandRequest request)
+    public async Task<IActionResult> LoginWithPassword([FromBody] LoginWithPasswordCommandRequest request)
     {
         var response= await _mediator.Send(request);
+        return StatusCode((int)response.StatusCode, response);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> LoginSendOTP([FromBody] LoginSendOTPRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode((int)response.StatusCode, response);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> LoginConfirmOTP([FromBody] ConfirmOtpRequest request)
+    {
+        var response = await _mediator.Send(request);
         return StatusCode((int)response.StatusCode, response);
     }
 }

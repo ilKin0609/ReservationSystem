@@ -70,10 +70,8 @@ builder.Services.Configure<JwtSetting>(
     builder.Configuration.GetSection("Jwt"));
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSetting>();
 
-builder.Services.Configure<Msg91Setting>(
-    builder.Configuration.GetSection("Msg91"));
-
-var msgSettings = builder.Configuration.GetSection("Msg91").Get<Msg91Setting>();
+builder.Services.Configure<InfobipSetting>(
+    builder.Configuration.GetSection("Infobip"));
 
 
 builder.Services.AddAuthentication(options =>

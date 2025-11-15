@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using ReservationSys.Application.Abstracts.Services;
-using ReservationSys.Application.Features.User.Commands.Register;
 using ReservationSys.Application.Shared.Responses;
 using ReservationSys.Domain.Entities;
 using System.Net;
@@ -13,7 +12,7 @@ public class ConfirmOtpHandler : IRequestHandler<ConfirmOtpRequest, BaseResponse
     private readonly UserManager<AppUser> _userManager;
     private readonly IOtpService _otpService;
 
-    public ConfirmOtpHandler(UserManager<AppUser> userManager,IOtpService otpService)
+    public ConfirmOtpHandler(UserManager<AppUser> userManager, IOtpService otpService)
     {
         _userManager = userManager;
         _otpService = otpService;
@@ -41,6 +40,6 @@ public class ConfirmOtpHandler : IRequestHandler<ConfirmOtpRequest, BaseResponse
             return new(errors, HttpStatusCode.BadRequest);
         }
 
-        return new("User registered successfully.", true, HttpStatusCode.OK);
+        return new("User registered successfully.", true,HttpStatusCode.OK);
     }
 }

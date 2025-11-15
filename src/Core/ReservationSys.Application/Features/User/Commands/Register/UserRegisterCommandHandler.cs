@@ -12,11 +12,13 @@ public class UserRegisterCommandHandler : IRequestHandler<UserRegisterCommandReq
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly IOtpService _otpService;
+
     public UserRegisterCommandHandler(UserManager<AppUser> userManager, IOtpService otpService)
     {
         _userManager = userManager;
         _otpService = otpService;
     }
+
     public async Task<BaseResponse<string>> Handle(UserRegisterCommandRequest request, CancellationToken cancellationToken)
     {
         var existingUser = await _userManager.FindByNameAsync(request.PhoneNumber);
@@ -24,6 +26,8 @@ public class UserRegisterCommandHandler : IRequestHandler<UserRegisterCommandReq
             return new("This phone number is already registered.", HttpStatusCode.BadRequest);
 
         await _otpService.SendOtpAsync(request);
+
         return new("OTP code sent successfully.", true, HttpStatusCode.OK);
     }
 }
+
