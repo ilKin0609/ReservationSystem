@@ -28,7 +28,6 @@
   <ItemGroup>
     <Folder Include="Abstracts\Repositories\" />
     <Folder Include="Features\User\Queries\" />
-    <Folder Include="DTOs\" />
   </ItemGroup>
 
 </Project>

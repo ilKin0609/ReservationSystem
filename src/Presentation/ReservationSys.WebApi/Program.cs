@@ -66,6 +66,12 @@ options =>
 
 builder.Services.AddMediatR(typeof(UserRegisterCommandRequest).Assembly);
 
+builder.Services.Configure<EmailSetting>(
+    builder.Configuration.GetSection("EmailSetting"));
+
+builder.Services.Configure<RabbitMqSetting>(
+    builder.Configuration.GetSection("RabbitMQ"));
+
 builder.Services.Configure<JwtSetting>(
     builder.Configuration.GetSection("Jwt"));
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSetting>();
