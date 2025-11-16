@@ -5,7 +5,7 @@ using ReservationSys.Domain.Entities;
 using System.Net;
 using System.Web;
 
-namespace ReservationSys.Application.Features.User.Commands.ConfirmEmail;
+namespace ReservationSys.Application.Features.User.Commands.Email.ConfirmEmail;
 
 public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommandRequest, BaseResponse<string>>
 {

@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="Abstracts\Repositories\" />
-    <Folder Include="Features\User\Queries\" />
   </ItemGroup>
 
 </Project>

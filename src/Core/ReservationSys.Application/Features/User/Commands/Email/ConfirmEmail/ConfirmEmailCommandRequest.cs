@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using ReservationSys.Application.Shared.Responses;
 
-namespace ReservationSys.Application.Features.User.Commands.ConfirmEmail;
+namespace ReservationSys.Application.Features.User.Commands.Email.ConfirmEmail;
 
 public class ConfirmEmailCommandRequest:IRequest<BaseResponse<string>>
 {
