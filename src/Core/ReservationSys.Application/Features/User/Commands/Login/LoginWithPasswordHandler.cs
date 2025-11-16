@@ -5,7 +5,7 @@ using ReservationSys.Application.Shared.Responses;
 using ReservationSys.Domain.Entities;
 using System.Net;
 
-namespace ReservationSys.Application.Features.User.Commands.Login.LoginPassword;
+namespace ReservationSys.Application.Features.User.Commands.Login;
 
 public class LoginWithPasswordHandler : IRequestHandler<LoginWithPasswordCommandRequest, BaseResponse<TokenResponse>>
 {
@@ -24,16 +24,20 @@ public class LoginWithPasswordHandler : IRequestHandler<LoginWithPasswordCommand
 
     public async Task<BaseResponse<TokenResponse>> Handle(LoginWithPasswordCommandRequest request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByNameAsync(request.PhoneNumber);
-        if (user is null)
-            return new("Phone number or password incorrect.", HttpStatusCode.BadRequest);
+        var existEmail = await _userManager.FindByEmailAsync(request.Email);
+        if (existEmail is null)
+            return new("Email or password is incorrect", HttpStatusCode.BadRequest);
 
-        var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, true);
-        if (!result.Succeeded)
-            return new("Phone number or password incorrect.", HttpStatusCode.BadRequest);
+        if (!existEmail.EmailConfirmed)
+            return new("Please confirm your email address", HttpStatusCode.BadRequest);
 
-        var token = await _jwtService.GenerateJwttoken(user);
+        SignInResult result = await _signInManager.CheckPasswordSignInAsync(existEmail, request.Password, true);
 
-        return new("Login successful.", token, true, HttpStatusCode.OK);
+        if(!result.Succeeded)
+            return new("Email or password is incorrect", HttpStatusCode.BadRequest);
+
+        var token =await _jwtService.GenerateJwttoken(existEmail);
+
+        return new("Login successfully",token, true, HttpStatusCode.OK);
     }
 }

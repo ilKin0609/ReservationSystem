@@ -9,40 +9,39 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
-namespace ReservationSys.Infrastructure.Services
+namespace ReservationSys.Infrastructure.Services;
+
+public class EmailService : IEmailService
 {
-    public class EmailService : IEmailService
+    private readonly EmailSetting _emailSetting;
+
+    public EmailService(IOptions<EmailSetting> emailSetting)
     {
-        private readonly EmailSetting _emailSetting;
+        _emailSetting = emailSetting.Value;
+    }
 
-        public EmailService(IOptions<EmailSetting> emailSetting)
+    public async Task SendEmailAsync(IEnumerable<string> toEmail, string subject, string body)
+    {
+        using var smtp = new SmtpClient(_emailSetting.SmtpServer, _emailSetting.SmtpPort)
         {
-            _emailSetting = emailSetting.Value;
+            Credentials = new NetworkCredential(_emailSetting.SenderEmail, _emailSetting.Password),
+            EnableSsl = true
+        };
+
+        using var message = new MailMessage
+        {
+            From = new MailAddress(_emailSetting.SenderEmail, _emailSetting.SenderName),
+            Subject = subject,
+            Body = body,
+            IsBodyHtml = true
+        };
+
+        foreach (var email in toEmail.Distinct())
+        {
+            message.To.Add(email);
         }
 
-        public async Task SendEmailAsync(IEnumerable<string> toEmail, string subject, string body)
-        {
-            using var smtp = new SmtpClient(_emailSetting.SmtpServer, _emailSetting.SmtpPort)
-            {
-                Credentials = new NetworkCredential(_emailSetting.SenderEmail, _emailSetting.Password),
-                EnableSsl = true
-            };
+        await smtp.SendMailAsync(message);
 
-            using var message = new MailMessage
-            {
-                From = new MailAddress(_emailSetting.SenderEmail, _emailSetting.SenderName),
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true
-            };
-
-            foreach (var email in toEmail.Distinct())
-            {
-                message.To.Add(email);
-            }
-
-            await smtp.SendMailAsync(message);
-
-        }
     }
 }

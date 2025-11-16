@@ -4,7 +4,7 @@ namespace ReservationSys.Application.Abstracts.Services;
 
 public interface IOtpService
 {
-    Task SendOtpAsync(UserRegisterCommandRequest model);
-    UserRegisterCommandRequest? ValidateOtp(string phoneNumber, string otp);
+    //Task SendOtpAsync(UserRegisterCommandRequest model);
+    //UserRegisterCommandRequest? ValidateOtp(string phoneNumber, string otp);
 }
 

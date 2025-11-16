@@ -11,7 +11,6 @@ namespace ReservationSys.Infrastructure.Services.EmailRabbitMQ;
 
 public class RabbitMqEmailQueueService : IRabbitMQService
 {
-
     private readonly RabbitMqSetting _settings;
 
     public RabbitMqEmailQueueService(IOptions<RabbitMqSetting> options)
